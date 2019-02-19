@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+
+  <name>gps_msgs</name>
+  <version>0.4.0</version>
+  <description>Messages for publishing RTK GPS information.</description>
+  
+  <license>Proprietary</license>
+  
+  <author email="ynava@anybotics.com">Yoshua Nava</author>
+  <maintainer email="ynava@anybotics.com">Yoshua Nava</maintainer>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>message_generation</depend>
+  <depend>message_runtime</depend>
+  <depend>std_msgs</depend>
+  
+</package>
