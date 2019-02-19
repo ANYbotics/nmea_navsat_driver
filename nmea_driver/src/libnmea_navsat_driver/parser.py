@@ -100,16 +100,21 @@ list of tuples where each tuple is a field name, conversion function and index
 into the split sentence"""
 parse_maps = {
     "GGA": [
+        ("message_id", str, 0),
         ("fix_type", int, 6),
         ("latitude", convert_latitude, 2),
         ("latitude_direction", str, 3),
         ("longitude", convert_longitude, 4),
         ("longitude_direction", str, 5),
         ("altitude", safe_float, 9),
+        ("altitude_units", str, 10),
         ("mean_sea_level", safe_float, 11),
+        ("mean_sea_level_units", str, 12),
         ("hdop", safe_float, 8),
         ("num_satellites", safe_int, 7),
         ("utc_time", convert_time, 1),
+        ("differential_age", safe_float, 13),
+        ("differential_station", str, 14),
         ],
     "RMC": [
         ("utc_time", convert_time, 1),
