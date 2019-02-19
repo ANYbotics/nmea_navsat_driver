@@ -51,6 +51,8 @@ class RosNMEADriver(object):
         self.vel_pub = rospy.Publisher('vel', TwistStamped, queue_size=1)
         self.heading_pub = rospy.Publisher('heading', QuaternionStamped, queue_size=1)
         self.time_ref_pub = rospy.Publisher('time_reference', TimeReference, queue_size=1)
+
+        # Publishers sending debug messages.
         self.gga_pub = rospy.Publisher('gga', Gpgga, queue_size=1)
         self.rtk_fix_pub = rospy.Publisher('rtk_fix', RtkNavSatFix, queue_size=1)
 
@@ -181,11 +183,15 @@ class RosNMEADriver(object):
             current_time = timestamp
         else:
             current_time = rospy.get_rostime()
+
+        current_gga = Gpgga()
         current_fix = NavSatFix()
         rtk_current_fix = RtkNavSatFix()
+
         current_fix.header.stamp = current_time
         current_fix.header.frame_id = frame_id
         rtk_current_fix.header = current_fix.header
+        current_gga.header = current_fix.header
         
         current_time_ref = TimeReference()
         current_time_ref.header.stamp = current_time
@@ -203,6 +209,23 @@ class RosNMEADriver(object):
 
             # Parse full GGA sentence
             data = parsed_sentence['GGA']
+
+            # Fill GGA message.
+            current_gga.message_id = data['message_id']
+            current_gga.utc_seconds = data['utc_time']
+            current_gga.lat = data['latitude']
+            current_gga.lon = data['longitude']
+            current_gga.lat_dir = data['latitude_direction']
+            current_gga.lon_dir = data['longitude_direction']
+            current_gga.gps_qual = data['fix_type']
+            current_gga.num_sats = data['num_satellites']
+            current_gga.hdop = data['hdop']
+            current_gga.alt = data['altitude']
+            current_gga.altitude_units = data['altitude_units']
+            current_gga.undulation = data['mean_sea_level']
+            current_gga.undulation_units = data['mean_sea_level_units']
+            current_gga.diff_age = data['differential_age']
+            current_gga.station_id = data['differential_station']
 
             # Parse fix type.
             fix_type = data['fix_type']
@@ -264,6 +287,7 @@ class RosNMEADriver(object):
 
             self.fix_pub.publish(current_fix)
             self.rtk_fix_pub.publish(rtk_current_fix)
+            self.gga_pub.publish(current_gga)
 
             if not math.isnan(data['utc_time']):
                 current_time_ref.time_ref = rospy.Time.from_sec(
