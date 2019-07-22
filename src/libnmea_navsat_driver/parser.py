@@ -134,9 +134,9 @@ parse_maps = {
     "HDT": [
         ("heading", safe_float, 1),
         ],
-    "VTG":[
-        ("true_course", safe_float,1),
-        ("speed", convert_knots_to_mps,5)
+    "VTG": [
+        ("true_course", safe_float, 1),
+        ("speed", convert_knots_to_mps, 5)
         ]
     }
 
@@ -153,7 +153,7 @@ def parse_nmea_sentence(nmea_sentence):
     # Ignore the $ and talker ID portions (e.g. GP)
     sentence_type = fields[0][3:]
 
-    if not sentence_type in parse_maps:
+    if sentence_type not in parse_maps:
         logger.debug("Sentence type %s not in parse map, ignoring."
                      % repr(sentence_type))
         return False

@@ -150,11 +150,11 @@ class RosNMEADriver(object):
             data = parsed_sentence['GGA']
             fix_type = data['fix_type']
             if not (fix_type in self.gps_qualities):
-              fix_type = -1
+                fix_type = -1
             gps_qual = self.gps_qualities[fix_type]
-            default_epe = gps_qual[0];
+            default_epe = gps_qual[0]
             current_fix.status.status = gps_qual[1]
-            current_fix.position_covariance_type = gps_qual[2];
+            current_fix.position_covariance_type = gps_qual[2]
 
             if gps_qual > 0:
                 self.valid_fix = True
@@ -205,10 +205,8 @@ class RosNMEADriver(object):
                 current_vel = TwistStamped()
                 current_vel.header.stamp = current_time
                 current_vel.header.frame_id = frame_id
-                current_vel.twist.linear.x = data['speed'] * \
-                                             math.sin(data['true_course'])
-                current_vel.twist.linear.y = data['speed'] * \
-                                             math.cos(data['true_course'])
+                current_vel.twist.linear.x = data['speed'] * math.sin(data['true_course'])
+                current_vel.twist.linear.y = data['speed'] * math.cos(data['true_course'])
                 self.vel_pub.publish(current_vel)
 
         elif 'RMC' in parsed_sentence:
