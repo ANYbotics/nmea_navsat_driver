@@ -2,12 +2,10 @@
 <package format="2">
   <name>nmea_navsat_driver</name>
   <version>1.5.0</version>
-  <description>
-    Package to parse NMEA strings and publish a very simple GPS message. Does not
-    require or use the GPSD deamon.
-  </description>
+  <description>Package to parse NMEA strings and publish a very simple GPS message. Does not require or use the GPSD deamon.</description>
 
-  <maintainer email="evenator@gmail.com">Ed Venator</maintainer>
+  <maintainer email="ynava@anybotics.com">Yoshua Nava</maintainer>
+  <maintainer email="mwulf@anybotics.com">Maximilian Wulf</maintainer>
 
   <license>BSD</license>
 
